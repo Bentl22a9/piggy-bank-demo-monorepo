@@ -4,15 +4,18 @@
   "description": "Hardhat solidity contract development skeleton",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "pre-commit": "lint-staged"
   },
-  "keywords": ["hardhat", "solidity", "skeleton"],
+  "keywords": [
+    "hardhat",
+    "solidity",
+    "skeleton"
+  ],
   "author": "benonchain",
   "license": "ISC",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "hardhat": "^2.16.1",
-    "husky": "^7.0.0",
     "lint-staged": "^13.2.3",
     "prettier": "^2.8.8",
     "prettier-plugin-solidity": "^1.1.3",
