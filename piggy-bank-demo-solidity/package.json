@@ -4,7 +4,11 @@
   "description": "Hardhat solidity contract development skeleton",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "compile": "npx hardhat compile --force",
+    "node": "npx hardhat node",
+    "deploy:piggyFrens": "npx hardhat --network localhost deployPiggyFrens",
+    "deploy:piggyBankVault": "npx hardhat run --network localhost scripts/deployPiggyBankVault.ts"
   },
   "keywords": [
     "hardhat",
@@ -15,6 +19,7 @@
   "license": "ISC",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@openzeppelin/contracts": "^4.9.2",
     "hardhat": "^2.16.1",
     "lint-staged": "^13.2.3",
     "prettier": "^2.8.8",
