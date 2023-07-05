@@ -41,7 +41,7 @@ contract PiggyBankVault {
       recoverSigner(message, signature) == _piggyBankMaster,
       "Invalid signature"
     );
-    _partners[partner] == true;
+    _partners[partner] = true;
   }
 
   function addPartner(address partner) external {
