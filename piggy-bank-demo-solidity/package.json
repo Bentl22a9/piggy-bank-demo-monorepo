@@ -4,7 +4,7 @@
   "description": "Hardhat solidity contract development skeleton",
   "scripts": {
     "test:piggyFrens": "npx hardhat test test/PiggyFrens.ts",
-    "test:piggyBankVault":  "npx hardhat test test/PiggyBankVault.ts",
+    "test:piggyBankVault": "npx hardhat test test/PiggyBankVault.ts",
     "pre-commit": "lint-staged",
     "compile": "npx hardhat compile --force",
     "node": "npx hardhat node",
