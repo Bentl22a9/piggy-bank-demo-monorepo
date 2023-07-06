@@ -1,14 +1,8 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import {HardhatEthersSigner} from "@nomicfoundation/hardhat-ethers/signers"
-import {PiggyFrens} from "../typechain-types";
-
-type PiggyFrensInitializer = {
-    deployer: HardhatEthersSigner,
-    name: string,
-    symbol: string,
-    totalSupply: string
-}
+import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers"
+import { PiggyFrens } from "../typechain-types";
+import { PiggyFrensInitializer } from "./types";
 
 describe("PiggyFrens", async () => {
     let signers: HardhatEthersSigner[];
