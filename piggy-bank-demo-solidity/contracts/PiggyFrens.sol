@@ -17,7 +17,7 @@ contract PiggyFrens is ERC20 {
 
   function transferFixedAmount(address recipient, uint256 amount) external {
     require(msg.sender == deployer, "Only the contract deployer can transfer");
-    _transfer(deployer, recipient, amount);
+    _transfer(msg.sender, recipient, amount);
   }
 
   function getBalanceOf(address account) external view returns (uint256) {
