@@ -49,6 +49,9 @@ contract PiggyBankVault {
       msg.sender == _piggyBankMaster,
       "Invalid sender, piggy bank master only"
     );
+
+    require(_partners[partner] == false, "Already in partner list");
+
     _partners[partner] = true;
   }
 
@@ -58,6 +61,10 @@ contract PiggyBankVault {
       "Invalid sender, piggy bank master only"
     );
     _partners[partner] = false;
+  }
+
+  function isPartner(address partner) external view returns (bool) {
+    return _partners[partner];
   }
 
   function withdraw(address partner, address recipient) external {
