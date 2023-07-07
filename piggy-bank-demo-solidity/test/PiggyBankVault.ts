@@ -64,40 +64,37 @@ describe("PiggyBankVault", function () {
       const initParam = initParams[index];
       const { deployer } = initParam;
 
+      const piggyBankVaultAddress = await piggyBankVault.getAddress()
+
       const amount = ethers.parseUnits("100", 18);
 
-      await fren.connect(deployer).transferFixedAmount(piggyMaster.address, amount);
+      await fren.connect(deployer).transferFixedAmount(piggyBankVaultAddress, amount);
 
-      expect(await fren.getBalanceOf(piggyMaster.address)).to.equal(amount);
+      expect(await fren.getBalanceOf(piggyBankVaultAddress)).to.equal(amount);
     }));
 
   });
 
-  it("3. approve PiggyBankVault", async () => {
-    await Promise.all(frensList.map(async (fren) => {
-      await fren.connect(piggyMaster).approve(await piggyBankVault.getAddress(), ethers.MaxUint256);
-    }));
-  });
-
-  it("4. breakPiggyBank should transfer with valid signature", async () => {
+  it("3. breakPiggyBank should transfer with valid signature", async () => {
     const receiver = signers[3];
     const partner = frensList[0];
-    const piggyMasterInitBalance = await partner.getBalanceOf(piggyMaster.address);
+    const piggyBankVaultAddress = await piggyBankVault.getAddress();
+    const piggyBankVaultInitBalance = await partner.getBalanceOf(piggyBankVaultAddress);
     const receiverInitBalance = await partner.getBalanceOf(receiver.address);
-    const amount = ethers.parseUnits("5", 18);
-    const hash = getSignPaymentHash(await receiver.getAddress(), await partner.getAddress(), amount.toString(), await piggyBankVault.getAddress());
-    console.log(`\t${hash}`);
-    const messageToSign = ethers.getBytes(hash);
 
+    const amount = ethers.parseUnits("5", 18);
+
+    const hash = getSignPaymentHash(await receiver.getAddress(), await partner.getAddress(), amount.toString(), piggyBankVaultAddress);
+    const messageToSign = ethers.getBytes(hash);
     const signature = await piggyMaster.signMessage(messageToSign);
 
     await piggyBankVault.connect(receiver).breakPiggyBank(partner, amount, signature);
 
-    expect(await partner.getBalanceOf(piggyMaster.address)).to.equal(piggyMasterInitBalance - amount);
+    expect(await partner.getBalanceOf(piggyBankVaultAddress)).to.equal(piggyBankVaultInitBalance - amount);
     expect(await partner.getBalanceOf(receiver.address)).to.equal(receiverInitBalance + amount);
   });
 
-  it("5. breakPiggyBank should revert against invalid signature", async () => {
+  it("4. breakPiggyBank should revert against invalid signature", async () => {
     const receiver = signers[3];
     const partner = frensList[0];
     const amount = ethers.parseUnits("5", 18);
