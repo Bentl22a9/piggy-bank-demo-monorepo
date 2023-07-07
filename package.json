@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
     "lint": "npm-run-all lint:solidity",
-    "lint:solidity": "cd piggy-bank-demo-solidity && npm run pre-commit"
+    "lint:solidity": "cd piggy-bank-demo-solidity && npm run pre-commit",
+    "lint:react": "cd piggy-bank-demo-react && npm run pre-commit"
   },
   "keywords": [],
   "author": "",
