@@ -36,7 +36,7 @@ type SectionCardProps = {
 
 const SectionCard = ({ title, body }: SectionCardProps) => {
   return (
-    <Card w="100%">
+    <Card w="100%" boxShadow="md">
       <CardHeader>
         <Heading size="md">{title}</Heading>
         <Divider color="gray.100" mt="4" />
@@ -63,7 +63,7 @@ const SectionCard = ({ title, body }: SectionCardProps) => {
 
 const Home = () => {
   return (
-    <Box w="100vw" h="100vh">
+    <Box w="100vw" h="100vh" bg="blackAlpha.50">
       <Container w="100%" h="100%">
         <VStack w="100%" h="100%">
           <Spacer />
