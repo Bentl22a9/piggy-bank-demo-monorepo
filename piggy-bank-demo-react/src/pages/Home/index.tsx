@@ -3,7 +3,6 @@ import {
   Box,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Container,
   Divider,
@@ -29,6 +28,23 @@ const Title = () => {
   );
 };
 
+const Footer = () => {
+  return (
+    <Box w="100%">
+      <Flex flexDirection="row" justifyContent="center" alignItems="center">
+        <Avatar size="sm" name="PEPEISLOVE" src={PEPE} />
+        <Link
+          href="https://github.com/Bentl22a9/piggy-bank-demo-monorepo"
+          color="green.400"
+          textDecor="underline"
+          target="_blank">
+          Sauce?
+        </Link>
+      </Flex>
+    </Box>
+  );
+};
+
 type SectionCardProps = {
   title: string;
   body: ReactNode;
@@ -43,20 +59,6 @@ const SectionCard = ({ title, body }: SectionCardProps) => {
       </CardHeader>
 
       <CardBody>{body}</CardBody>
-
-      <CardFooter>
-        <Box w="100%">
-          <Flex flexDirection="row" justifyContent="end" alignItems="center">
-            <Avatar size="sm" name="PEPEISLOVE" src={PEPE} />
-            <Link
-              href="https://github.com/Bentl22a9/piggy-bank-demo-monorepo"
-              color="green.400"
-              textDecor="underline">
-              Sauce?
-            </Link>
-          </Flex>
-        </Box>
-      </CardFooter>
     </Card>
   );
 };
@@ -76,6 +78,8 @@ const Home = () => {
           <SectionCard title="Burrito demo" body={<Text>dummy</Text>} />
           <Spacer />
           <SectionCard title="User claim demo" body={<Text>dummy</Text>} />
+          <Spacer />
+          <Footer />
           <Spacer />
         </VStack>
       </Container>
