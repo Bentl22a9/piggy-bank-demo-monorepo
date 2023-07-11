@@ -1,16 +1,23 @@
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardBody,
   CardHeader,
+  Center,
   Container,
   Divider,
   Flex,
   Heading,
   Link,
+  List,
+  ListIcon,
+  ListItem,
+  OrderedList,
   Spacer,
   Text,
+  UnorderedList,
   VStack
 } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
@@ -71,13 +78,72 @@ const Home = () => {
           <Spacer />
           <Title />
           <Spacer />
-          <SectionCard title="What is Piggy Bank?" body={<Text>dummy</Text>} />
+          <SectionCard
+            title="What is Piggy Bank?"
+            body={
+              <Box>
+                <UnorderedList>
+                  <ListItem>
+                    Piggy Bank is where user rewards are stored, and can later be claimed
+                  </ListItem>
+                  <ListItem>
+                    It removes manual airdrops thereby saving us time, let alone gas fees
+                  </ListItem>
+                  <ListItem>
+                    Moreover, it enhances the gamification experience and provides a clear reason to
+                    use the Burrito Wallet: complete quests and earn rewards!
+                  </ListItem>
+                </UnorderedList>
+              </Box>
+            }
+          />
           <Spacer />
-          <SectionCard title="Partner demo" body={<Text>dummy</Text>} />
+          <SectionCard
+            title="How it works? - Partner"
+            body={
+              <Box>
+                <OrderedList>
+                  <ListItem>Fill a quest form</ListItem>
+                  <ListItem>Send 💰 to Piggy Bank Vault(Smart Contract)</ListItem>
+                </OrderedList>
+                <Flex>
+                  <Spacer />
+                  <Button>Demo</Button>
+                </Flex>
+              </Box>
+            }
+          />
           <Spacer />
-          <SectionCard title="Burrito demo" body={<Text>dummy</Text>} />
+          <SectionCard
+            title="How it works? - Burrito"
+            body={
+              <Box>
+                ...
+                <Flex>
+                  <Spacer />
+                  <Button>Demo</Button>
+                </Flex>
+              </Box>
+            }
+          />
           <Spacer />
-          <SectionCard title="User claim demo" body={<Text>dummy</Text>} />
+          <SectionCard
+            title="How it works? - User"
+            body={
+              <Box>
+                <OrderedList>
+                  <ListItem>Find 🐷</ListItem>
+                  <ListItem>Complete a quest</ListItem>
+                  <ListItem>Earn reward</ListItem>
+                  <ListItem>Smash and claim!</ListItem>
+                </OrderedList>
+                <Flex>
+                  <Spacer />
+                  <Button>Demo</Button>
+                </Flex>
+              </Box>
+            }
+          />
           <Spacer />
           <Footer />
           <Spacer />
