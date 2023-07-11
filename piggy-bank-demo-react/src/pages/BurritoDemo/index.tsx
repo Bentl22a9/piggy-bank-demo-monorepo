@@ -1,8 +1,8 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, VStack } from '@chakra-ui/react';
 
 const BurritoDemo = () => {
-  return <Box>Herro</Box>;
+  return <VStack w="100%" h="100%"></VStack>;
 };
 
 export default BurritoDemo;

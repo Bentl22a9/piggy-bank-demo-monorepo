@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -8,7 +7,6 @@ import {
   Divider,
   Flex,
   Heading,
-  Link,
   ListItem,
   OrderedList,
   Spacer,
@@ -16,37 +14,7 @@ import {
   VStack
 } from '@chakra-ui/react';
 import React, { ReactNode, useCallback } from 'react';
-import PEPE from '../../assets/images/mmga.png';
 import { useNavigate } from 'react-router-dom';
-
-const Title = () => {
-  return (
-    <Box w="100%" p={4}>
-      <Flex>
-        <Spacer />
-        <Heading size="xl">Piggy Bank Demo 🐷 + 🔨 = 💰</Heading>
-        <Spacer />
-      </Flex>
-    </Box>
-  );
-};
-
-const Footer = () => {
-  return (
-    <Box w="100%">
-      <Flex flexDirection="row" justifyContent="center" alignItems="center">
-        <Avatar size="sm" name="PEPEISLOVE" src={PEPE} />
-        <Link
-          href="https://github.com/Bentl22a9/piggy-bank-demo-monorepo"
-          color="green.400"
-          textDecor="underline"
-          target="_blank">
-          Sauce?
-        </Link>
-      </Flex>
-    </Box>
-  );
-};
 
 type SectionCardProps = {
   title: string;
@@ -83,9 +51,6 @@ const Home = () => {
 
   return (
     <VStack w="100%" h="100%">
-      <Spacer />
-      <Title />
-      <Spacer />
       <SectionCard
         title="What is Piggy Bank?"
         body={
@@ -152,9 +117,6 @@ const Home = () => {
           </Box>
         }
       />
-      <Spacer />
-      <Footer />
-      <Spacer />
     </VStack>
   );
 };

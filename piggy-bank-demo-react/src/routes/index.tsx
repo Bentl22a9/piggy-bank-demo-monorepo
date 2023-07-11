@@ -8,7 +8,7 @@ const routes: RouteObject[] = [
   {
     path: '/',
     element: (
-      <Layout>
+      <Layout title="Piggy Bank Demo 🐷 + 🔨 = 💰">
         <Home />
       </Layout>
     )
@@ -16,7 +16,7 @@ const routes: RouteObject[] = [
   {
     path: '/burrito-demo',
     element: (
-      <Layout>
+      <Layout title="Burrito Demo">
         <BurritoDemo />
       </Layout>
     )
