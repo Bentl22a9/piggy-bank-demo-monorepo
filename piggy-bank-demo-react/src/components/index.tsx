@@ -1,5 +1,16 @@
-import React from 'react';
-import { Avatar, Box, Flex, Heading, Link, Spacer } from '@chakra-ui/react';
+import React, { ReactNode } from 'react';
+import {
+  Avatar,
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  Divider,
+  Flex,
+  Heading,
+  Link,
+  Spacer
+} from '@chakra-ui/react';
 import PEPE from '../assets/images/mmga.png';
 
 export const Footer = () => {
@@ -32,5 +43,24 @@ export const Title = ({ title }: TitleProps) => {
         <Spacer />
       </Flex>
     </Box>
+  );
+};
+
+type SectionCardProps = {
+  title?: string;
+  body: ReactNode;
+};
+
+export const SectionCard = ({ title, body }: SectionCardProps) => {
+  return (
+    <Card w="100%" boxShadow="md">
+      {title && (
+        <CardHeader>
+          <Heading size="md">{title}</Heading>
+          <Divider color="gray.100" mt="4" />
+        </CardHeader>
+      )}
+      <CardBody>{body}</CardBody>
+    </Card>
   );
 };

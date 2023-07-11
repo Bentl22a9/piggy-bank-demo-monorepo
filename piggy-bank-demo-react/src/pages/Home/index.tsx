@@ -1,38 +1,16 @@
 import {
   Box,
   Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Divider,
   Flex,
-  Heading,
   ListItem,
   OrderedList,
   Spacer,
   UnorderedList,
   VStack
 } from '@chakra-ui/react';
-import React, { ReactNode, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-type SectionCardProps = {
-  title: string;
-  body: ReactNode;
-};
-
-const SectionCard = ({ title, body }: SectionCardProps) => {
-  return (
-    <Card w="100%" boxShadow="md">
-      <CardHeader>
-        <Heading size="md">{title}</Heading>
-        <Divider color="gray.100" mt="4" />
-      </CardHeader>
-
-      <CardBody>{body}</CardBody>
-    </Card>
-  );
-};
+import { SectionCard } from '../../components';
 
 const Home = () => {
   const navigate = useNavigate();
