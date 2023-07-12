@@ -1,5 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Box, Button, Checkbox, Flex, Spacer, Spinner, Stack, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Flex,
+  FormControl, FormHelperText, FormLabel,
+  Input,
+  Spacer,
+  Spinner,
+  Stack,
+  Text,
+  VStack
+} from '@chakra-ui/react';
 import { SectionCard } from '../../components';
 
 const PartnerDemo = () => {
@@ -28,7 +40,7 @@ const PartnerDemo = () => {
   }, [values]);
 
   return (
-    <VStack w="100%">
+    <VStack w="100%" h="100%">
       <Spacer />
       <SectionCard
         title={'1. Fill out quest form'}
@@ -66,7 +78,7 @@ const PartnerDemo = () => {
                 retweet twitter post
               </Checkbox>
             </Stack>
-            <Box>
+            <Box mt="8">
               <Flex justifyContent="end">
                 <Button
                   isDisabled={values.length === 0 || formCompleted}
@@ -80,6 +92,27 @@ const PartnerDemo = () => {
           </Box>
         }
       />
+      <Spacer/>
+      <SectionCard title="2. Send it!" body={
+        <Box>
+          <FormControl>
+            <FormLabel mb='2'>How much?</FormLabel>
+            <Input type="number"/>
+            <FormHelperText>As much as you can:)</FormHelperText>
+            <Box mt="8">
+              <Flex justifyContent="end">
+                <Button
+                  isDisabled={!formCompleted}
+                  isLoading={false}
+                  onClick={() => console.log("todo!")}
+                  spinner={<Spinner />}>
+                  Send
+                </Button>
+              </Flex>
+            </Box>
+          </FormControl>
+        </Box>
+      } />
       <Spacer/>
     </VStack>
   );
