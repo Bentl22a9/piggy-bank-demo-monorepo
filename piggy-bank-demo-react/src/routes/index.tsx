@@ -3,6 +3,7 @@ import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import Home from '../pages/Home';
 import BurritoDemo from '../pages/BurritoDemo';
 import Layout from '../layouts';
+import PartnerDemo from '../pages/PartnerDemo';
 
 const routes: RouteObject[] = [
   {
@@ -16,8 +17,16 @@ const routes: RouteObject[] = [
   {
     path: '/burrito-demo',
     element: (
-      <Layout title="Burrito Demo">
+      <Layout title="Burrito Demo 🌯">
         <BurritoDemo />
+      </Layout>
+    )
+  },
+  {
+    path: '/partner-demo',
+    element: (
+      <Layout title="Partner Demo 🤝">
+        <PartnerDemo />
       </Layout>
     )
   }
