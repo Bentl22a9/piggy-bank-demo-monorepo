@@ -29,6 +29,7 @@ const Home = () => {
 
   return (
     <VStack w="100%" h="100%">
+      <Spacer/>
       <SectionCard
         title="What is Piggy Bank?"
         body={
@@ -95,6 +96,7 @@ const Home = () => {
           </Box>
         }
       />
+      <Spacer/>
     </VStack>
   );
 };
