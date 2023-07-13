@@ -8,17 +8,16 @@ import React, {
   useMemo
 } from 'react';
 import { ethers, JsonRpcProvider } from 'ethers';
+import { EthersProvider } from '../contracts';
 
 type Web3ContextValue = {
   provider: JsonRpcProvider;
   piggyBankVaultDeployer: ethers.Signer;
-  piggyFrenDeployer: ethers.Signer;
+  piggyFrensDeployer: ethers.Signer;
   user: ethers.Signer;
 };
 
 const Web3Context = createContext<Web3ContextValue | undefined>(undefined);
-
-const JSON_RPC_URL = 'http://127.0.0.1:8545';
 
 type Web3ProviderProps = {
   children: ReactNode;
@@ -33,8 +32,7 @@ export const Web3Provider = ({ children }: Web3ProviderProps) => {
   }, [provider]);
 
   useEffect(() => {
-    const provider = new ethers.JsonRpcProvider(JSON_RPC_URL);
-    setProvider(provider);
+    setProvider(EthersProvider);
   }, []);
 
   useEffect(() => {
@@ -46,7 +44,7 @@ export const Web3Provider = ({ children }: Web3ProviderProps) => {
       return {
         provider,
         piggyBankVaultDeployer: signers[0],
-        piggyFrenDeployer: signers[1],
+        piggyFrensDeployer: signers[1],
         user: signers[2]
       };
     }
