@@ -8,11 +8,14 @@ import {
   UnorderedList,
   VStack
 } from '@chakra-ui/react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SectionCard } from '../../components';
+import { useWeb3 } from '../../context';
 
 const Home = () => {
+  const web3 = useWeb3();
+
   const navigate = useNavigate();
 
   const onClickUserDemo = useCallback(() => {
@@ -27,9 +30,20 @@ const Home = () => {
     navigate('/burrito-demo');
   }, []);
 
+  const test = async () => {
+    if (web3) {
+      const userAddr = await web3.user.getAddress();
+      console.log(userAddr);
+    }
+  };
+
+  useEffect(() => {
+    test();
+  }, [web3]);
+
   return (
     <VStack w="100%" h="100%">
-      <Spacer/>
+      <Spacer />
       <SectionCard
         title="What is Piggy Bank?"
         body={
@@ -96,7 +110,7 @@ const Home = () => {
           </Box>
         }
       />
-      <Spacer/>
+      <Spacer />
     </VStack>
   );
 };
