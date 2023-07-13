@@ -8,16 +8,11 @@ import {
   UnorderedList,
   VStack
 } from '@chakra-ui/react';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SectionCard } from '../../components';
-import { useWeb3 } from '../../context';
-import { PIGGY_BANK_VAULT_ADDRESS, PIGGY_FRENS_CONTRACT_ADDRESS } from '../../constants';
-import { PiggyFrens } from '../../contracts';
 
 const Home = () => {
-  const web3 = useWeb3();
-
   const navigate = useNavigate();
 
   const onClickUserDemo = useCallback(() => {
@@ -31,24 +26,6 @@ const Home = () => {
   const onClickBurritoDemo = useCallback(() => {
     navigate('/burrito-demo');
   }, []);
-
-  const test = async () => {
-    if (web3) {
-      const userAddr = await web3.user.getAddress();
-      console.log(userAddr);
-
-      console.log(PIGGY_FRENS_CONTRACT_ADDRESS);
-
-      console.log(await PiggyFrens.getAddress());
-
-      const balance = await PiggyFrens.getBalanceOf(await web3.piggyFrensDeployer.getAddress());
-      console.log(balance);
-    }
-  };
-
-  useEffect(() => {
-    test();
-  }, [web3]);
 
   return (
     <VStack w="100%" h="100%">
