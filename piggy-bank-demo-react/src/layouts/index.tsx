@@ -20,7 +20,6 @@ const Layout = ({ title, children }: LayoutProps) => {
 
   const init = useCallback(async () => {
     if (web3) {
-      console.log('hi');
       setPBVDBalance(
         ethers.formatUnits(
           await PiggyFrens.getBalanceOf(await web3.piggyBankVaultDeployer.getAddress()),
