@@ -9,7 +9,8 @@
     "compile": "npx hardhat compile --force",
     "node": "npx hardhat node",
     "deploy:piggyFrens": "npx hardhat --network localhost deployPiggyFrens",
-    "deploy:piggyBankVault": "npx hardhat run --network localhost scripts/deployPiggyBankVault.ts"
+    "deploy:piggyBankVault": "npx hardhat run --network localhost scripts/deployPiggyBankVault.ts",
+    "setupDemo": "npx hardhat run --network localhost scripts/setupDemoEnv.ts"
   },
   "keywords": [
     "hardhat",
