@@ -12,6 +12,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SectionCard } from '../../components';
 import { useWeb3 } from '../../context';
+import { PIGGY_BANK_VAULT_ADDRESS } from '../../constants';
 
 const Home = () => {
   const web3 = useWeb3();
