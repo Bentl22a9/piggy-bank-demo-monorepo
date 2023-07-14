@@ -46,11 +46,22 @@ const PartnerDemo = () => {
       );
       setIsSending(false);
       toast({
-        title: `Partner Deposit`,
-        description: `Partner deposited ${amount} PFS to PiggyBankVault🥰`,
+        title: `Partner Deposited!`,
+        description: `Partner deposited ${amount} PFS to PiggyBankVault 🥰`,
         status: 'success',
-        duration: 2000,
+        duration: 3000,
         isClosable: true
+      });
+      web3.setBalance({
+        ...web3.balance,
+        PBVDBalance: ethers.formatUnits(
+          await PiggyFrens.getBalanceOf(await web3.piggyBankVaultDeployer.getAddress()),
+          18
+        ),
+        PFSDBalance: ethers.formatUnits(
+          `${await PiggyFrens.getBalanceOf(await web3.piggyFrensDeployer.getAddress())}`,
+          18
+        ),
       });
     }
   }, [web3, amount]);
@@ -62,10 +73,6 @@ const PartnerDemo = () => {
       setIsLoading(false);
     }, 500);
   }, []);
-
-  useEffect(() => {
-    console.log('values: ', values);
-  }, [values]);
 
   return (
     <VStack w="100%" h="100%">
