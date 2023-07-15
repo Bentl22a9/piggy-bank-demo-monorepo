@@ -4,6 +4,7 @@ import Home from '../pages/Home';
 import BurritoDemo from '../pages/BurritoDemo';
 import Layout from '../layouts';
 import PartnerDemo from '../pages/PartnerDemo';
+import UserDemo from '../pages/UserDemo';
 
 const routes: RouteObject[] = [
   {
@@ -27,6 +28,14 @@ const routes: RouteObject[] = [
     element: (
       <Layout title="Partner Demo 🤝">
         <PartnerDemo />
+      </Layout>
+    )
+  },
+  {
+    path: '/user-demo',
+    element: (
+      <Layout title="User Demo 🙋‍">
+        <UserDemo />
       </Layout>
     )
   }
