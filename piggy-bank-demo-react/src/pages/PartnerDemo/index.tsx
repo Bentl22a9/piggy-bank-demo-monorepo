@@ -18,6 +18,8 @@ import { SectionCard } from '../../components';
 import { PiggyFrens } from '../../contracts';
 import { useWeb3 } from '../../context';
 import { ethers } from 'ethers';
+import {setSessionStorage} from "../../utils";
+import {QUEST_SESSION_STORAGE_KEY} from "../../constants";
 
 const PartnerDemo = () => {
   const web3 = useWeb3();
@@ -29,13 +31,21 @@ const PartnerDemo = () => {
   const [questFormDone, setQuestFormDone] = useState<boolean>(false);
   const [amount, setAmount] = useState<string>('');
 
-  const onClickCheckBox = useCallback(
-    (item: string) => {
-      if (values.includes(item)) setValues(values.filter((each) => each !== item));
-      else setValues([...values, item]);
-    },
-    [values]
-  );
+  const onClickCheckBox = useCallback((item: string) => {
+    setValues((prevValues) => {
+      if (prevValues.includes(item)) {
+        return prevValues.filter((each) => each !== item);
+      } else {
+        return [...prevValues, item];
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    setSessionStorage(QUEST_SESSION_STORAGE_KEY, {
+      values
+    });
+  }, [values]);
 
   const depositPFS = useCallback(async () => {
     if (web3) {
