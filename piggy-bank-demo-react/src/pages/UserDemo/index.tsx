@@ -42,15 +42,22 @@ const UserDemo = () => {
 
   const [showPiggy, setShowPiggy] = useState<boolean>(true);
   const [quests, setQuests] = useState<string[]>([]);
-  const [completed, setCompleted] = useState<boolean>(false);
+  const [completed, setCompleted] = useState<string[]>([]);
+  const [questDone, setQuestDone] = useState<boolean>(false);
 
   const onPiggyClick = useCallback(() => {
     onOpen();
   }, []);
 
-  const onClickCheckBox = useCallback(() => {
-
-  }, [])
+  const onClickCheckBox = useCallback((item: string) => {
+    setCompleted((prevValues) => {
+      if (prevValues.includes(item)) {
+        return prevValues.filter((each) => each !== item);
+      } else {
+        return [...prevValues, item];
+      }
+    });
+  }, []);
 
   useEffect(() => {
     setShowPiggy(!isOpen);
@@ -62,6 +69,12 @@ const UserDemo = () => {
       setQuests(quest.values != null ? quest.values : []);
     }
   }, [])
+
+  useEffect(() => {
+    setQuestDone(quests.length === completed.length);
+  }, [completed, quests]);
+
+  console.log(questDone)
 
   return (
     <VStack w="100%" h="100%">
@@ -89,32 +102,43 @@ const UserDemo = () => {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Complete quests and earn reward!</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>{
+          <ModalBody>
             <Box w="100%">
               <Stack direction="column" spacing={2}>
                 {
                   quests.map((quest) => (
                       <Checkbox
                           key={`idx-${quest}`}
-                          onChange={(e) => onClickCheckBox()}
+                          onChange={(e) => onClickCheckBox(e.target.value)}
                           value={quest}
                           colorScheme="pink">
                         {quest}
                       </Checkbox>
                   ))
                 }
+
+                {
+                    questDone && (
+                        <Box>
+                          <Text>{`Congrats!! You've earned ${(Math.random() * 100).toFixed(2)}`}<strong>PFS</strong> 🥳🥳🥳</Text>
+                        </Box>
+                    )
+                }
               </Stack>
             </Box>
-
-          }</ModalBody>
+          </ModalBody>
 
           <ModalFooter>
             <Button colorScheme="gray" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
+            {
+              questDone && (
+                    <Button colorScheme="pink">Save to Piggy Bank</Button>
+                )
+            }
           </ModalFooter>
         </ModalContent>
       </Modal>
