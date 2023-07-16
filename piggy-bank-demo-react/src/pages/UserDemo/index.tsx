@@ -23,6 +23,7 @@ import { SectionCard } from '../../components';
 import {getSessionStorage} from "../../utils";
 import {QUEST_SESSION_STORAGE_KEY} from "../../constants";
 import {QuestForm} from "../../@types";
+import {useWeb3} from "../../context";
 
 const keyframesX = keyframes`
   0% { transform: translate(0,0)}
@@ -38,12 +39,14 @@ const animationX = `${keyframesX} 3s linear infinite alternate`;
 const animationY = `${keyframesY} 1.2s linear infinite alternate`;
 
 const UserDemo = () => {
+  const web3 = useWeb3();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [showPiggy, setShowPiggy] = useState<boolean>(true);
   const [quests, setQuests] = useState<string[]>([]);
   const [completed, setCompleted] = useState<string[]>([]);
   const [questDone, setQuestDone] = useState<boolean>(false);
+  const [reward, setReward] = useState<string>('0');
 
   const onPiggyClick = useCallback(() => {
     onOpen();
@@ -59,6 +62,22 @@ const UserDemo = () => {
     });
   }, []);
 
+  const onClickSave = useCallback((value: string) => {
+    if(web3) {
+      web3.setBalance({
+        ...web3.balance,
+        piggyBankBalance: String(Number(web3.balance.piggyBankBalance) + Number(value))
+      });
+    }
+    setCompleted([]);
+    onClose();
+  }, [web3])
+
+  const onCloseModal = () => {
+    setCompleted([]);
+    onClose();
+  }
+
   useEffect(() => {
     setShowPiggy(!isOpen);
   }, [isOpen])
@@ -71,8 +90,12 @@ const UserDemo = () => {
   }, [])
 
   useEffect(() => {
-    setQuestDone(quests.length === completed.length);
+    setQuestDone((quests.length !== 0 && quests.length === completed.length));
   }, [completed, quests]);
+
+  useEffect(() => {
+    questDone && setReward(`${(Math.random() * 100).toFixed(2)}`);
+  }, [questDone])
 
   console.log(questDone)
 
@@ -99,7 +122,7 @@ const UserDemo = () => {
         }
       />
       <Spacer />
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal isOpen={isOpen} onClose={onCloseModal} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Complete quests and earn reward!</ModalHeader>
@@ -122,7 +145,7 @@ const UserDemo = () => {
                 {
                     questDone && (
                         <Box>
-                          <Text>{`Congrats!! You've earned ${(Math.random() * 100).toFixed(2)}`}<strong>PFS</strong> 🥳🥳🥳</Text>
+                          <Text>{`Congrats!! You've earned ${reward}`}<strong>PFS</strong> 🥳🥳🥳</Text>
                         </Box>
                     )
                 }
@@ -131,12 +154,12 @@ const UserDemo = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="gray" mr={3} onClick={onClose}>
+            <Button colorScheme="gray" mr={3} onClick={onCloseModal}>
               Close
             </Button>
             {
               questDone && (
-                    <Button colorScheme="pink">Save to Piggy Bank</Button>
+                    <Button colorScheme="pink" onClick={() => onClickSave(reward)}>Save to Piggy Bank</Button>
                 )
             }
           </ModalFooter>
