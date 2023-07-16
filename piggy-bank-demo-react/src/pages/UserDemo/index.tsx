@@ -14,10 +14,15 @@ import {
   ModalFooter,
   ModalContent,
   ModalHeader,
-  Button
+  Button,
+  Checkbox,
+  Stack
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { SectionCard } from '../../components';
+import {getSessionStorage} from "../../utils";
+import {QUEST_SESSION_STORAGE_KEY} from "../../constants";
+import {QuestForm} from "../../@types";
 
 const keyframesX = keyframes`
   0% { transform: translate(0,0)}
@@ -36,14 +41,27 @@ const UserDemo = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [showPiggy, setShowPiggy] = useState<boolean>(true);
+  const [quests, setQuests] = useState<string[]>([]);
+  const [completed, setCompleted] = useState<boolean>(false);
 
   const onPiggyClick = useCallback(() => {
     onOpen();
   }, []);
 
+  const onClickCheckBox = useCallback(() => {
+
+  }, [])
+
   useEffect(() => {
     setShowPiggy(!isOpen);
   }, [isOpen])
+
+  useEffect(() => {
+    const quest = getSessionStorage<QuestForm>(QUEST_SESSION_STORAGE_KEY);
+    if(quest) {
+      setQuests(quest.values != null ? quest.values : []);
+    }
+  }, [])
 
   return (
     <VStack w="100%" h="100%">
@@ -73,10 +91,27 @@ const UserDemo = () => {
         <ModalContent>
           <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>dummy</ModalBody>
+          <ModalBody>{
+            <Box w="100%">
+              <Stack direction="column" spacing={2}>
+                {
+                  quests.map((quest) => (
+                      <Checkbox
+                          key={`idx-${quest}`}
+                          onChange={(e) => onClickCheckBox()}
+                          value={quest}
+                          colorScheme="pink">
+                        {quest}
+                      </Checkbox>
+                  ))
+                }
+              </Stack>
+            </Box>
+
+          }</ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
+            <Button colorScheme="gray" mr={3} onClick={onClose}>
               Close
             </Button>
             <Button variant="ghost">Secondary Action</Button>
