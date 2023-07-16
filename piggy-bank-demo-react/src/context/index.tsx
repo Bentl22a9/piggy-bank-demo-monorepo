@@ -62,7 +62,7 @@ export const Web3Provider = ({ children }: Web3ProviderProps) => {
           18
         ),
         userBalance: ethers.formatUnits(await PiggyFrens.getBalanceOf(await signers[2].getAddress()), 18),
-        piggyBankBalance: getSessionStorage(PIGGY_BANK_BALANCE) ?? '0'
+        piggyBankBalance: getSessionStorage(PIGGY_BANK_BALANCE) ?? '0.0'
       })
     }
   }, [provider, signers])

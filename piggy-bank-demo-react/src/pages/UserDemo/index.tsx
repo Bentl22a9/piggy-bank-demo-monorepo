@@ -68,7 +68,7 @@ const UserDemo = () => {
         ...web3.balance,
         piggyBankBalance: String(Number(web3.balance.piggyBankBalance) + Number(value))
       });
-      setSessionStorage(PIGGY_BANK_BALANCE, String(Number(web3.balance.piggyBankBalance) + Number(value)));
+      setSessionStorage(PIGGY_BANK_BALANCE, String((Number(web3.balance.piggyBankBalance) + Number(value)).toFixed(2)));
     }
     setCompleted([]);
     onClose();
