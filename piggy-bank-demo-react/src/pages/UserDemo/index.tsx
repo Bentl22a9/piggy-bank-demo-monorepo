@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Box,
   Spacer,
@@ -33,14 +33,17 @@ const animationX = `${keyframesX} 3s linear infinite alternate`;
 const animationY = `${keyframesY} 1.2s linear infinite alternate`;
 
 const UserDemo = () => {
-  // const [showModal, setShowModal] = useState<boolean>(false);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [showPiggy, setShowPiggy] = useState<boolean>(true);
+
   const onPiggyClick = useCallback(() => {
-    // setShowModal(true);
     onOpen();
   }, []);
+
+  useEffect(() => {
+    setShowPiggy(!isOpen);
+  }, [isOpen])
 
   return (
     <VStack w="100%" h="100%">
@@ -49,14 +52,18 @@ const UserDemo = () => {
         title={'1. Find 🐷 from Burrito Wallet'}
         body={
           <Box w="100%" h="200px">
-            <Box as={motion.div} animation={animationX}>
-              <Box w="80px" h="80px" as={motion.div} animation={animationY}>
-                <VStack onClick={() => onPiggyClick()}>
-                  <Text fontSize={'4xl'}>🐷</Text>
-                  <Tag>catch me</Tag>
-                </VStack>
-              </Box>
-            </Box>
+            {
+              showPiggy && (
+                    <Box as={motion.div} animation={animationX}>
+                      <Box w="80px" h="80px" as={motion.div} animation={animationY}>
+                        <VStack onClick={() => onPiggyClick()}>
+                          <Text fontSize={'4xl'}>🐷</Text>
+                          <Tag>catch me</Tag>
+                        </VStack>
+                      </Box>
+                    </Box>
+                )
+            }
           </Box>
         }
       />
