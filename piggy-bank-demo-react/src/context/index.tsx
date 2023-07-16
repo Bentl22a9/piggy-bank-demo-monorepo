@@ -9,6 +9,8 @@ import React, {
 } from 'react';
 import { ethers, JsonRpcProvider } from 'ethers';
 import { EthersProvider, PiggyFrens } from '../contracts';
+import {getSessionStorage} from "../utils";
+import {PIGGY_BANK_BALANCE} from "../constants";
 
 type Web3ContextValue = {
   provider: JsonRpcProvider;
@@ -59,7 +61,8 @@ export const Web3Provider = ({ children }: Web3ProviderProps) => {
           `${await PiggyFrens.getBalanceOf(await signers[1].getAddress())}`,
           18
         ),
-        userBalance: ethers.formatUnits(await PiggyFrens.getBalanceOf(await signers[2].getAddress()), 18)
+        userBalance: ethers.formatUnits(await PiggyFrens.getBalanceOf(await signers[2].getAddress()), 18),
+        piggyBankBalance: getSessionStorage(PIGGY_BANK_BALANCE) ?? '0'
       })
     }
   }, [provider, signers])

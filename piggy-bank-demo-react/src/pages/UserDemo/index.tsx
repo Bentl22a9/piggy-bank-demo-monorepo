@@ -20,8 +20,8 @@ import {
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { SectionCard } from '../../components';
-import {getSessionStorage} from "../../utils";
-import {QUEST_SESSION_STORAGE_KEY} from "../../constants";
+import {getSessionStorage, setSessionStorage} from "../../utils";
+import {PIGGY_BANK_BALANCE, QUEST_SESSION_STORAGE_KEY} from "../../constants";
 import {QuestForm} from "../../@types";
 import {useWeb3} from "../../context";
 
@@ -68,6 +68,7 @@ const UserDemo = () => {
         ...web3.balance,
         piggyBankBalance: String(Number(web3.balance.piggyBankBalance) + Number(value))
       });
+      setSessionStorage(PIGGY_BANK_BALANCE, String(Number(web3.balance.piggyBankBalance) + Number(value)));
     }
     setCompleted([]);
     onClose();
