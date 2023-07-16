@@ -12,7 +12,7 @@ const Layout = ({ title, children }: LayoutProps) => {
   const web3 = useWeb3();
 
   return (
-    <Box w="100vw" h="100vh" bg="blackAlpha.50">
+    <Box w="100vw" h="100vh" bg="blackAlpha.50" overflow="auto">
       <Container w="100%" h="100%">
         <VStack w="100%" h="100%">
           <Spacer />
@@ -31,7 +31,9 @@ const Layout = ({ title, children }: LayoutProps) => {
             </Center>
           </VStack>
           <Spacer />
-          {children}
+          <Box w="100%">
+            {children}
+          </Box>
           <Spacer />
           <Footer />
           <Spacer />
