@@ -23,7 +23,9 @@ import {
   Input,
   Flex,
   Spinner,
-  Center
+  Center,
+  CircularProgress,
+  useToast
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { SectionCard } from '../../components';
@@ -54,6 +56,8 @@ const animationY = `${keyframesY} 1.2s linear infinite alternate`;
 
 const UserDemo = () => {
   const web3 = useWeb3();
+  const toast = useToast();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [showPiggy, setShowPiggy] = useState<boolean>(true);
@@ -63,6 +67,7 @@ const UserDemo = () => {
   const [reward, setReward] = useState<string>('0');
   const [amount, setAmount] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(false);
+  const [isBreaking, setIsBreaking] = useState<boolean>(false);
 
   const onPiggyClick = useCallback(() => {
     onOpen();
@@ -98,44 +103,55 @@ const UserDemo = () => {
 
   const onBreak = async () => {
     try {
-      if (web3) {
-        const bigIntAmount = ethers.parseUnits(amount, 18);
+      setIsBreaking(true);
+      setTimeout(async () => {
+        if (web3) {
+          const bigIntAmount = ethers.parseUnits(amount, 18);
 
-        const hash = getSignPaymentHash(
-          await web3.user.getAddress(),
-          PIGGY_FRENS_CONTRACT_ADDRESS,
-          bigIntAmount.toString(),
-          PIGGY_BANK_VAULT_ADDRESS
-        );
-        const messageToSign = ethers.getBytes(hash);
-        const signature = await web3.piggyBankVaultDeployer.signMessage(messageToSign);
+          const hash = getSignPaymentHash(
+            await web3.user.getAddress(),
+            PIGGY_FRENS_CONTRACT_ADDRESS,
+            bigIntAmount.toString(),
+            PIGGY_BANK_VAULT_ADDRESS
+          );
+          const messageToSign = ethers.getBytes(hash);
+          const signature = await web3.piggyBankVaultDeployer.signMessage(messageToSign);
 
-        await (PiggyBankVault.connect(web3.user) as any).breakPiggyBank(
-          PIGGY_FRENS_CONTRACT_ADDRESS,
-          bigIntAmount,
-          signature
-        );
+          await (PiggyBankVault.connect(web3.user) as any).breakPiggyBank(
+            PIGGY_FRENS_CONTRACT_ADDRESS,
+            bigIntAmount,
+            signature
+          );
 
-        setSessionStorage(
-          PIGGY_BANK_BALANCE,
-          `${Number(web3.balance.piggyBankBalance) - Number(amount)}`
-        );
+          setSessionStorage(
+            PIGGY_BANK_BALANCE,
+            `${Number(web3.balance.piggyBankBalance) - Number(amount)}`
+          );
 
-        web3.setBalance({
-          ...web3.balance,
-          piggyBankBalance: `${Number(web3.balance.piggyBankBalance) - Number(amount)}`,
-          PBVBalance: ethers.formatUnits(
-            await PiggyFrens.getBalanceOf(PIGGY_BANK_VAULT_ADDRESS),
-            18
-          ),
-          userBalance: ethers.formatUnits(
-            await PiggyFrens.getBalanceOf(await web3.user.getAddress()),
-            18
-          )
-        });
+          web3.setBalance({
+            ...web3.balance,
+            piggyBankBalance: `${Number(web3.balance.piggyBankBalance) - Number(amount)}`,
+            PBVBalance: ethers.formatUnits(
+              await PiggyFrens.getBalanceOf(PIGGY_BANK_VAULT_ADDRESS),
+              18
+            ),
+            userBalance: ethers.formatUnits(
+              await PiggyFrens.getBalanceOf(await web3.user.getAddress()),
+              18
+            )
+          });
 
-        setAmount('');
-      }
+          setAmount('');
+          setIsBreaking(false);
+          toast({
+            title: `Claim Completed`,
+            description: `You claimed ${amount} PFS from PiggyBank 🥰`,
+            status: 'success',
+            duration: 3000,
+            isClosable: true
+          });
+        }
+      }, 500);
     } catch (e) {
       console.error(e);
     }
@@ -172,7 +188,6 @@ const UserDemo = () => {
       setIsValid(false);
     }
   }, [amount, web3?.balance?.piggyBankBalance]);
-
   return (
     <VStack w="100%" h="100%">
       <Spacer />
@@ -198,30 +213,35 @@ const UserDemo = () => {
         title={'2. Smash and claim rewards!'}
         body={
           <Box w="100%">
-            <VStack w="100%">
-              <FormControl isInvalid={!isValid}>
-                <FormLabel mb="2">Amount to claim</FormLabel>
-                <Input
-                  type="number"
-                  inputMode="numeric"
-                  value={amount}
-                  onChange={(e) => {
-                    e.preventDefault();
-                    // It's good to validate the input again here since not all browsers respect the 'pattern' attribute.
-                    setAmount(e.target.value);
-                  }}
-                />
-                <Box mt="8">
-                  <Flex justifyContent="end">
-                    <VStack>
-                      <Button isDisabled={!isValid} onClick={onBreak}>
-                        🐷 + 🔨 = 💰
-                      </Button>
-                    </VStack>
-                  </Flex>
-                </Box>
-              </FormControl>
-            </VStack>
+            {!isBreaking ? (
+              <VStack w="100%">
+                <FormControl isInvalid={!isValid}>
+                  <FormLabel mb="2">Amount to claim</FormLabel>
+                  <Input
+                    type="number"
+                    inputMode="numeric"
+                    value={amount}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setAmount(e.target.value);
+                    }}
+                  />
+                  <Box mt="8">
+                    <Flex justifyContent="end">
+                      <VStack>
+                        <Button isDisabled={!isValid || isBreaking} onClick={onBreak}>
+                          🐷 + 🔨 = 💰
+                        </Button>
+                      </VStack>
+                    </Flex>
+                  </Box>
+                </FormControl>
+              </VStack>
+            ) : (
+              <VStack w="100%" justifyContent="center">
+                <CircularProgress isIndeterminate color="pink.400" />
+              </VStack>
+            )}
           </Box>
         }
       />
