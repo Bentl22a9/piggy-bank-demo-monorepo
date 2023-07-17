@@ -18,8 +18,8 @@ import { SectionCard } from '../../components';
 import { PiggyFrens } from '../../contracts';
 import { useWeb3 } from '../../context';
 import { ethers } from 'ethers';
-import {setSessionStorage} from "../../utils";
-import {QUEST_SESSION_STORAGE_KEY} from "../../constants";
+import { setSessionStorage } from '../../utils';
+import { PIGGY_BANK_VAULT_ADDRESS, QUEST_SESSION_STORAGE_KEY } from '../../constants';
 
 const PartnerDemo = () => {
   const web3 = useWeb3();
@@ -51,7 +51,7 @@ const PartnerDemo = () => {
     if (web3) {
       setIsSending(true);
       await (PiggyFrens.connect(web3.piggyFrensDeployer) as any).transferFixedAmount(
-        await web3.piggyBankVaultDeployer.getAddress(),
+        PIGGY_BANK_VAULT_ADDRESS,
         ethers.parseUnits(amount, 18)
       );
       setIsSending(false);
@@ -64,14 +64,11 @@ const PartnerDemo = () => {
       });
       web3.setBalance({
         ...web3.balance,
-        PBVDBalance: ethers.formatUnits(
-          await PiggyFrens.getBalanceOf(await web3.piggyBankVaultDeployer.getAddress()),
-          18
-        ),
+        PBVBalance: ethers.formatUnits(await PiggyFrens.getBalanceOf(PIGGY_BANK_VAULT_ADDRESS), 18),
         PFSDBalance: ethers.formatUnits(
           `${await PiggyFrens.getBalanceOf(await web3.piggyFrensDeployer.getAddress())}`,
           18
-        ),
+        )
       });
     }
   }, [web3, amount]);

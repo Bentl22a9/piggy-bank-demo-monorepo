@@ -17,23 +17,31 @@ const Layout = ({ title, children }: LayoutProps) => {
         <VStack w="100%" h="100%">
           <Spacer />
           <Title title={title} />
-          <Spacer/>
+          <Spacer />
           <VStack w="100%">
             <Text fontSize={'xl'}>PFS Balance</Text>
-            <Text fontSize={'s'} color={'gray.400'}>* PFS(PiggyFrens) is ERC-20 token</Text>
+            <Text fontSize={'s'} color={'gray.400'}>
+              * PFS(PiggyFrens) is ERC-20 token
+            </Text>
             <Center>
               <HStack spacing={4}>
-                <Text fontSize={'xl'}>🌯: {web3 && web3.balance.PBVDBalance} <strong>PFS</strong></Text>
-                <Text fontSize={'xl'}>🤝: {web3 && web3.balance.PFSDBalance} <strong>PFS</strong></Text>
-                <Text fontSize={'xl'}>🐷: {web3 && web3.balance.piggyBankBalance} <strong>PFS</strong></Text>
-                <Text fontSize={'xl'}>🥰: {web3 && web3.balance.userBalance} <strong>PFS</strong></Text>
+                <Text fontSize={'xl'}>
+                  🌯: {web3 && web3.balance.PBVBalance} <strong>PFS</strong>
+                </Text>
+                <Text fontSize={'xl'}>
+                  🤝: {web3 && web3.balance.PFSDBalance} <strong>PFS</strong>
+                </Text>
+                <Text fontSize={'xl'}>
+                  🐷: {web3 && web3.balance.piggyBankBalance} <strong>PFS</strong>
+                </Text>
+                <Text fontSize={'xl'}>
+                  🥰: {web3 && web3.balance.userBalance} <strong>PFS</strong>
+                </Text>
               </HStack>
             </Center>
           </VStack>
           <Spacer />
-          <Box w="100%">
-            {children}
-          </Box>
+          <Box w="100%">{children}</Box>
           <Spacer />
           <Footer />
           <Spacer />
