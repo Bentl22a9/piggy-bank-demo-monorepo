@@ -88,7 +88,7 @@ const UserDemo = () => {
       if (web3) {
         web3.setBalance({
           ...web3.balance,
-          piggyBankBalance: String(Number(web3.balance.piggyBankBalance) + Number(value))
+          piggyBankBalance: String((Number(web3.balance.piggyBankBalance) + Number(value)).toFixed(2))
         });
         setSessionStorage(
           PIGGY_BANK_BALANCE,
