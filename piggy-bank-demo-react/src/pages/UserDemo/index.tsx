@@ -214,7 +214,7 @@ const UserDemo = () => {
         body={
           <Box w="100%">
             {!isBreaking ? (
-              <VStack w="100%">
+              <VStack w="100%" h="200px">
                 <FormControl isInvalid={!isValid}>
                   <FormLabel mb="2">Amount to claim</FormLabel>
                   <Input
@@ -238,7 +238,7 @@ const UserDemo = () => {
                 </FormControl>
               </VStack>
             ) : (
-              <VStack w="100%" justifyContent="center">
+              <VStack w="100%" h="200px" justifyContent="center">
                 <CircularProgress isIndeterminate color="pink.400" />
               </VStack>
             )}
