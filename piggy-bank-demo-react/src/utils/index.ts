@@ -29,3 +29,11 @@ export const getSignPaymentHash = (
 
   return ethers.solidityPackedKeccak256(types, values);
 };
+
+export const formatDecimal = (number: string): string => {
+  try {
+    return parseFloat(number).toFixed(2);
+  } catch (e) {
+    return number;
+  }
+}

@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import { ethers, JsonRpcProvider } from 'ethers';
 import { EthersProvider, PiggyFrens } from '../contracts';
-import { getSessionStorage } from '../utils';
+import {formatDecimal, getSessionStorage} from '../utils';
 import { PIGGY_BANK_BALANCE, PIGGY_BANK_VAULT_ADDRESS } from '../constants';
 
 type Web3ContextValue = {
@@ -52,16 +52,16 @@ export const Web3Provider = ({ children }: Web3ProviderProps) => {
     if (provider && signers && signers.length > 0) {
       setBalance({
         ...balance,
-        PBVBalance: ethers.formatUnits(await PiggyFrens.getBalanceOf(PIGGY_BANK_VAULT_ADDRESS), 18),
-        PFSDBalance: ethers.formatUnits(
-          `${await PiggyFrens.getBalanceOf(await signers[1].getAddress())}`,
-          18
-        ),
-        userBalance: ethers.formatUnits(
-          await PiggyFrens.getBalanceOf(await signers[2].getAddress()),
-          18
-        ),
-        piggyBankBalance: getSessionStorage(PIGGY_BANK_BALANCE) ?? '0.0'
+        PBVBalance: formatDecimal(ethers.formatUnits(await PiggyFrens.getBalanceOf(PIGGY_BANK_VAULT_ADDRESS), 18)),
+        PFSDBalance: formatDecimal(ethers.formatUnits(
+            `${await PiggyFrens.getBalanceOf(await signers[1].getAddress())}`,
+            18
+        )),
+        userBalance: formatDecimal(ethers.formatUnits(
+            await PiggyFrens.getBalanceOf(await signers[2].getAddress()),
+            18
+        )),
+        piggyBankBalance: formatDecimal(getSessionStorage(PIGGY_BANK_BALANCE) ?? '0')
       });
     }
   }, [provider, signers]);
