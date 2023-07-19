@@ -18,7 +18,7 @@ import { SectionCard } from '../../components';
 import { PiggyFrens } from '../../contracts';
 import { useWeb3 } from '../../context';
 import { ethers } from 'ethers';
-import { setSessionStorage } from '../../utils';
+import {formatDecimal, setSessionStorage} from '../../utils';
 import { PIGGY_BANK_VAULT_ADDRESS, QUEST_SESSION_STORAGE_KEY } from '../../constants';
 
 const PartnerDemo = () => {
@@ -64,11 +64,11 @@ const PartnerDemo = () => {
       });
       web3.setBalance({
         ...web3.balance,
-        PBVBalance: ethers.formatUnits(await PiggyFrens.getBalanceOf(PIGGY_BANK_VAULT_ADDRESS), 18),
-        PFSDBalance: ethers.formatUnits(
-          `${await PiggyFrens.getBalanceOf(await web3.piggyFrensDeployer.getAddress())}`,
-          18
-        )
+        PBVBalance: formatDecimal(ethers.formatUnits(await PiggyFrens.getBalanceOf(PIGGY_BANK_VAULT_ADDRESS), 18)),
+        PFSDBalance: formatDecimal(ethers.formatUnits(
+            `${await PiggyFrens.getBalanceOf(await web3.piggyFrensDeployer.getAddress())}`,
+            18
+        ))
       });
     }
   }, [web3, amount]);
